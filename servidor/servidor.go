@@ -17,7 +17,7 @@ var process4 = true
 var process5 = true
 var tipo string
 var NumberOfProcess = 0
-var conexion net.Conn
+var Process = []int{1, 2, 3, 4, 5}
 
 func main() {
 	listener, err := net.Listen("tcp", ":9998")
@@ -108,29 +108,45 @@ func main() {
 func listenConnection(conn net.Conn, _timeless uint) {
 
 	NumberOfProcess = NumberOfProcess + 1
+	for i := 0; i < 4; i++ {
+		if Process[i] != 0 {
+			switch Process[i] {
+			case 1:
+				fmt.Println("Si entre")
+				processid = 1
+				process = false
+				Process[i] = 0
+				break
+			case 2:
+				fmt.Println("Si entre")
+				processid = 2
+				process2 = false
+				Process[i] = 0
+				break
+			case 3:
+				fmt.Println("Si entre")
+				processid = 3
+				process3 = false
+				Process[i] = 0
+				break
+			case 4:
+				fmt.Println("Si entre")
+				processid = 4
+				process4 = false
+				Process[i] = 0
+				break
+			case 5:
+				fmt.Println("Si entre")
+				processid = 5
+				process5 = false
+				Process[i] = 0
+				break
+			}
+			break
+		}
+	}
 	for {
-		if NumberOfProcess == 1 {
-			process = false
-			processid = 1
-		}
-		if NumberOfProcess == 2 {
-			process2 = false
-			processid = 2
-		}
-		if NumberOfProcess == 3 {
-			process3 = false
-			processid = 3
-		}
-		if NumberOfProcess == 4 {
-			process4 = false
-			processid = 4
-		}
-		if NumberOfProcess == 5 {
-			process5 = false
-			processid = 5
-			NumberOfProcess = 0
-		}
-
+		fmt.Println(processid)
 		buffer := make([]byte, 1400)
 		dataSize, err := conn.Read(buffer)
 		data := buffer[:dataSize]
@@ -145,24 +161,26 @@ func listenConnection(conn net.Conn, _timeless uint) {
 		id2, _ := strconv.Atoi(aux) //String to int
 		fmt.Println(id2)
 		fmt.Println(reflect.TypeOf(id2))
-		if id2 == 1 {
+		switch id2 {
+		case 1:
 			process = true
+			Process[0] = 1
 			return
-		}
-		if id2 == 2 {
+		case 2:
 			process2 = true
+			Process[1] = 2
 			return
-		}
-		if id2 == 3 {
+		case 3:
 			process3 = true
+			Process[2] = 3
 			return
-		}
-		if id2 == 4 {
+		case 4:
 			process4 = true
+			Process[3] = 4
 			return
-		}
-		if id2 == 5 {
+		case 5:
 			process5 = true
+			Process[4] = 5
 			return
 		}
 
